@@ -17,6 +17,27 @@ public class Mario : MonoBehaviour
         var body = GetComponent<Rigidbody2D>();
         var collider = GetComponent<CapsuleCollider2D>();
         
+        //touching floor check
+        RaycastHit2D hitFloor = Physics2D.Raycast(collider.bounds.center - new Vector3(0,collider.bounds.extents.y + 0.01f,0), Vector2.down, 0.1f);
+        //touching somethings side
+        RaycastHit2D hitRight = Physics2D.Raycast(collider.bounds.center + new Vector3(collider.bounds.extents.x + 0.01f,0,0), Vector2.right, 0.1f);
+
+        //Debug.DrawRay(collider.bounds.center + new Vector3(collider.bounds.extents.x + 0.01f,0,0), Vector2.right, Color.blue, 0.1f);
+
+        if(hitRight.rigidbody != null)
+        {
+            Debug.Log(hitRight.collider.name);
+            switch (hitRight.collider.name)
+            { 
+                case "FlagPole":
+                  Debug.Log("victory");
+                  FlagBehavior.touched = true;
+                  break;
+                case "Enemy":
+                  Debug.Log("fail");
+                  break; 
+            }
+        }
         
 
         if(Input.anyKey){
@@ -31,14 +52,12 @@ public class Mario : MonoBehaviour
 			    body.AddForce(this.transform.right);
 		    }
 
-            RaycastHit2D hitFloor = Physics2D.Raycast(collider.bounds.center - new Vector3(0,collider.bounds.extents.y + 0.01f,0), Vector2.down, 0.1f);
-           
             if(hitFloor.rigidbody != null)
             {
                 if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space)) 
                     {
 			            // jump
-			            body.AddForce(10*this.transform.up);
+			            body.AddForce(25*this.transform.up);
 		            }
             }
                 
