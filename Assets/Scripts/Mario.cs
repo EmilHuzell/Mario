@@ -16,7 +16,7 @@ public class Mario : MonoBehaviour
     {
         var body = GetComponent<Rigidbody2D>();
         var collider = GetComponent<CapsuleCollider2D>();
-        //vector2 centerOfBody = body.
+        
         
 
         if(Input.anyKey){
@@ -31,15 +31,8 @@ public class Mario : MonoBehaviour
 			    body.AddForce(this.transform.right);
 		    }
 
-            
-
             RaycastHit2D hitFloor = Physics2D.Raycast(collider.bounds.center - new Vector3(0,collider.bounds.extents.y + 0.01f,0), Vector2.down, 0.1f);
            
-
-            Debug.DrawRay(collider.bounds.center - collider.bounds.extents, Vector2.down, Color.red);
-
-            Debug.Log(hitFloor.rigidbody);
-
             if(hitFloor.rigidbody != null)
             {
                 if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space)) 
